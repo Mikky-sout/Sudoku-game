@@ -5,6 +5,7 @@ class State:
     self.parent = parent
     self.current = current
 
+
 def search(start):
   explored = []
   frontier = q.Queue()

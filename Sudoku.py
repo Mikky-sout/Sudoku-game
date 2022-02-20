@@ -1,5 +1,18 @@
+import random
+
+
 class Sudoku:
-    def __init__(self,initTable=[]):
+    def __init__(self,initTable=[],shuffle=None):
+        if shuffle == None:
+            self.action = ['1','2','3','4','5','6','7','8','9']
+        else:
+            self.action = []
+            for i in range(9):
+                randomNum = random.randint(1,9)
+                while randomNum in self.action:
+                    randomNum = random.randint(1,9)
+                self.action.append(randomNum)
+            print(self.action)
         if initTable == []:
 
             self.table = []
@@ -51,7 +64,6 @@ class Sudoku:
         return -1,-1
 
     def checkAction(self,row,col):
-        action = ['1','2','3','4','5','6','7','8','9']
         checkCol = self.table[row]
         startRow = 0
         startCol = 0
@@ -83,17 +95,17 @@ class Sudoku:
             startRow = 6
             startCol = 6
         for i in checkCol:
-            if i in action:
-                action.remove(i)
+            if i in self.action:
+                self.action.remove(i)
         for i in self.table:
-            if i[col] in action:
-                action.remove(i[col])
+            if i[col] in self.action:
+                self.action.remove(i[col])
 
         for r in range(3):
             for c in range(3):
-                if self.table[startRow+r][startCol+c] in action:
-                    action.remove(self.table[startRow+r][startCol+c])
-        return action
+                if self.table[startRow+r][startCol+c] in self.action:
+                    self.action.remove(self.table[startRow+r][startCol+c])
+        return self.action
 
 
 
