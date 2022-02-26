@@ -1,18 +1,19 @@
 import random
-
-
+import Textfile as txt
+import Stack as stack
+import queue
 class Sudoku:
-    def __init__(self,initTable=[],shuffle=None):
-        if shuffle == None:
+    def __init__(self,initTable=[],action=None):
+        if action == None:
             self.action = ['1','2','3','4','5','6','7','8','9']
         else:
-            self.action = []
-            for i in range(9):
-                randomNum = random.randint(1,9)
-                while randomNum in self.action:
-                    randomNum = random.randint(1,9)
-                self.action.append(randomNum)
-            print(self.action)
+            self.action = action
+        #     for i in range(9):
+        #         randomNum = random.randint(1,9)
+        #         while randomNum in self.action:
+        #             randomNum = random.randint(1,9)
+        #         self.action.append(randomNum)
+        #     print(self.action)
         if initTable == []:
 
             self.table = []
@@ -31,16 +32,16 @@ class Sudoku:
             for i in range(9):
                 for x in range(9):
                     self.table[i][x] = initTable[i][x]
-
-    def display(self):
-        for i,row in enumerate(self.table):
-            for x,col in enumerate(row):
-                if col == '0':
-                    print('| ',end='')
-                else:
-                    print('|'+col, end='')
-            print('|')
-        print()
+    #
+    # def display(self):
+    #     for i,row in enumerate(self.table):
+    #         for x,col in enumerate(row):
+    #             if col == '0':
+    #                 print('| ',end='')
+    #             else:
+    #                 print('|'+col, end='')
+    #         print('|')
+    #     print()
 
     def insert(self,num):
         for i,row in enumerate(self.table):
@@ -64,6 +65,7 @@ class Sudoku:
         return -1,-1
 
     def checkAction(self,row,col):
+        action = ['9','2','3','4','5','6','7','8','1']
         checkCol = self.table[row]
         startRow = 0
         startCol = 0
@@ -95,17 +97,65 @@ class Sudoku:
             startRow = 6
             startCol = 6
         for i in checkCol:
-            if i in self.action:
-                self.action.remove(i)
+            if i in action:
+                action.remove(i)
         for i in self.table:
-            if i[col] in self.action:
-                self.action.remove(i[col])
+            if i[col] in action:
+                action.remove(i[col])
 
         for r in range(3):
             for c in range(3):
-                if self.table[startRow+r][startCol+c] in self.action:
-                    self.action.remove(self.table[startRow+r][startCol+c])
-        return self.action
+                if self.table[startRow+r][startCol+c] in action:
+                    action.remove(self.table[startRow+r][startCol+c])
+        return action
+
+def randomClearTable(table,clearNum=30):
+    newTable = []
+    for i in range(9):
+        newRow = []
+        for x in range(9):
+            newRow.append('0')
+        newTable.append(newRow)
+    for i in range(9):
+        for x in range(9):
+            newTable[i][x] = table[i][x]
+
+    if clearNum > 81:
+        clearNum = 81
+    while clearNum > 0:
+        row = random.randint(0,8)
+        col = random.randint(0,8)
+        if newTable[row][col]=="0":
+            continue
+        newTable[row][col] = "0"
+        clearNum-=1
+    return newTable
+
+def bestPath(ans):
+    node = ans[-1]
+    if not node.current == None:
+        txt.write(node.current.table)
+
+    st = stack.Stack()
+
+    if not node.current == None:
+        st.push(node.current)
+        while not node.parent == None:
+            node = node.parent
+            st.push(node.current)
+    else:
+        return None
+    return st
+
+def explore(ans):
+    q = queue.Queue()
+    for i in ans:
+        q.enqueue(i.current)
+    return q
+
+
+
+
 
 
 

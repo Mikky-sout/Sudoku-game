@@ -11,6 +11,12 @@ class Queue:
     else:
       return self.queue.pop(0)
 
+  def first(self):
+    return self.queue[0]
+
+  def isEmpty(self):
+    return len(self.queue) <= 0
+
   def __len__(self):
     return len(self.queue)
 
