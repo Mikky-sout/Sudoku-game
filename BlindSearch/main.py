@@ -46,9 +46,11 @@ def main():
                 if startButton.collidepoint(pos) and allowClick:
                     allowClick = False
                     if isDFS:
+
                         dfs = DFS.DFS(WIN,board,clock,isDFS,fps,isSlow)
                         ans,time,log = dfs.search(sk.Sudoku(table))
                         size = len(ans)
+                        print(time,log,len(ans))
                     else:
                         bfs = BFS.BFS(WIN, board, clock, isDFS,fps,isSlow)
                         ans,time,log = bfs.search(sk.Sudoku(table))
@@ -64,7 +66,7 @@ def main():
 
                 if randomButton.collidepoint(pos) and allowClick:
                     searchingText = ""
-                    currentTable = table = sk.randomClearTable(tf.randomArr(),random.randint(20,50))
+                    currentTable = table = sk.randomClearTable(tf.randomArr(),random.randint(30,30))
                     size = 0
                     log=''
 

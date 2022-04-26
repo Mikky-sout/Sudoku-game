@@ -1,5 +1,5 @@
 import pygame
-from Constant import WHITE,BLACK,ROWS,SQUARE_SIZE,FONT_SIZE,WIDTH,HEIGHT,MENU_HEIGHT,MENU_WIDTH
+from Constant import WHITE,BLACK,RED,ROWS,SQUARE_SIZE,FONT_SIZE,WIDTH,HEIGHT,MENU_HEIGHT,MENU_WIDTH
 class Board:
     def __init__(self):
         pygame.init()
@@ -27,7 +27,10 @@ class Board:
                 if table[i][n] == '0':
                     text = self.font.render(" ", True, BLACK)
                 else:
-                    text = self.font.render(table[i][n], True, BLACK)
+                    if table[i][n][1:] == '*':
+                        text = self.font.render(table[i][n][0], True, RED)
+                    else:
+                        text = self.font.render(table[i][n], True, BLACK)
                 textCenter = (x+(count*step), y+(step*i))
                 win.blit(text, textCenter)
                 count += 1
@@ -58,51 +61,26 @@ class Board:
         font = pygame.font.Font(None, 26)
         win.blit(font.render(text, True, BLACK), (self.menu_X_index + 62, HEIGHT-50))
 
-    def showLog(self,win,log,size):
+    def showLog(self,win,log):
         font = pygame.font.Font(None, 26)
-        win.blit(font.render('# Allocated block : '+log, True, BLACK), (self.menu_X_index + 62, HEIGHT-150))
-        win.blit(font.render('# Explored : ' + str(size), True, BLACK), (self.menu_X_index + 62, HEIGHT - 100))
+        win.blit(font.render('# Allocated block : '+log, True, BLACK), (self.menu_X_index + 62, HEIGHT-100))
 
-    def dfsChoice(self,win,isDFS):
-        font = pygame.font.Font(None, 46)
-        win.blit(font.render('DFS', True, BLACK), (self.menu_X_index + 60, 445))
-        if isDFS:
-            choiceDFS = pygame.Rect((self.menu_X_index , 435), (50, 50))
-            pygame.draw.rect(win, BLACK, choiceDFS)
-        else:
-            choiceDFS = pygame.Rect((self.menu_X_index, 435), (50, 50))
-            pygame.draw.rect(win, BLACK, choiceDFS, 8)
-        return choiceDFS
 
-    def bfsChoice(self,win,isDFS):
+    def showSADetail(self,win,T,t,h):
+        font = pygame.font.Font(None, 70)
+        win.blit(font.render('t', True, BLACK), (self.menu_X_index-50, HEIGHT-455))
+        pygame.draw.rect(win, BLACK, (self.menu_X_index, HEIGHT-470, 350, 75), 0)
         font = pygame.font.Font(None, 46)
-        win.blit(font.render('BFS', True, BLACK), (self.menu_X_index + 185 + 55, 445))
-        if not isDFS:
-            choiceBFS = pygame.Rect((self.menu_X_index + 180, 435), (50, 50))
-            pygame.draw.rect(win, BLACK, choiceBFS)
-        else:
-            choiceBFS = pygame.Rect((self.menu_X_index + 180, 435), (50, 50))
-            pygame.draw.rect(win, BLACK, choiceBFS, 8)
-        return choiceBFS
+        win.blit(font.render(str(t), True, WHITE), (self.menu_X_index+5, HEIGHT - 440))
 
-    def slowChoice(self,win,isSlow):
+        font = pygame.font.Font(None, 70)
+        win.blit(font.render('T', True, BLACK), (self.menu_X_index - 50, HEIGHT - 355))
+        pygame.draw.rect(win, BLACK, (self.menu_X_index, HEIGHT - 370, 350, 75), 0)
         font = pygame.font.Font(None, 46)
-        win.blit(font.render('SLOW', True, BLACK), (self.menu_X_index + 60, 520))
-        if isSlow:
-            choiceSlow = pygame.Rect((self.menu_X_index ,510), (50, 50))
-            pygame.draw.rect(win, BLACK, choiceSlow)
-        else:
-            choiceSlow = pygame.Rect((self.menu_X_index,510), (50, 50))
-            pygame.draw.rect(win, BLACK, choiceSlow, 8)
-        return choiceSlow
+        win.blit(font.render(str(T), True, WHITE), (self.menu_X_index + 5, HEIGHT - 340))
 
-    def fastChoice(self,win,isSlow):
+        font = pygame.font.Font(None, 70)
+        win.blit(font.render('h(x)', True, BLACK), (self.menu_X_index - 90, HEIGHT - 255))
+        pygame.draw.rect(win, BLACK, (self.menu_X_index, HEIGHT - 270, 350, 75), 0)
         font = pygame.font.Font(None, 46)
-        win.blit(font.render('FAST', True, BLACK), (self.menu_X_index + 185 + 55, 520))
-        if not isSlow:
-            choiceFast = pygame.Rect((self.menu_X_index + 180, 510), (50, 50))
-            pygame.draw.rect(win, BLACK, choiceFast)
-        else:
-            choiceFast = pygame.Rect((self.menu_X_index + 180, 510), (50, 50))
-            pygame.draw.rect(win, BLACK, choiceFast, 8)
-        return choiceFast
+        win.blit(font.render(str(h), True, WHITE), (self.menu_X_index + 5, HEIGHT - 240))
