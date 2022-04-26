@@ -64,9 +64,9 @@ class SimulatedAnnealing:
       t+=1
       block+=self.increase
       newH = current.calCost()
-      # if newH <= 15 and not newH == 0:
-      #   error = current.find2Error()
-      #   self.blockStart,self.blockEnd,self.increase = self.findSearchLimit(error)
+      if newH <= 12 and not newH == 0:
+        error = current.find2Error()
+        self.blockStart,self.blockEnd,self.increase = self.findSearchLimit(error)
       self.update(current.table,T,t,newH)
       if block >= self.blockEnd+1:
         block = self.blockStart
