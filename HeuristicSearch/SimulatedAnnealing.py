@@ -36,7 +36,7 @@ class SimulatedAnnealing:
     return self.TMax * math.pow(0.98,time)
 
 
-  def search(self,start,TMax=1000):
+  def search(self,start,TMax=100):
     time_start = time.perf_counter()
     self.TMax = TMax
     tracemalloc.start()
@@ -60,17 +60,18 @@ class SimulatedAnnealing:
       if np.random.uniform(1, 0, 1) < pos or nextState.calCost() < h:
         current = sk.Sudoku(nextState.table)
 
-
       t+=1
       block+=self.increase
       newH = current.calCost()
-      if newH <= 12 and not newH == 0:
+      if T <= (TMax*0.1) and not newH == 0:
         error = current.find2Error()
         self.blockStart,self.blockEnd,self.increase = self.findSearchLimit(error)
+
       self.update(current.table,T,t,newH)
+
       if block >= self.blockEnd+1:
         block = self.blockStart
-      # current.display()
+
 
 
   def findSearchLimit(self,error):

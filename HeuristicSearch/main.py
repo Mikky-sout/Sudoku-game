@@ -46,7 +46,7 @@ def main():
 
                 if randomButton.collidepoint(pos) and allowClick:
                     searchingText = ""
-                    currentTable = table = sk.randomClearTable(tf.randomArr(), random.randint(30, 30))
+                    currentTable = table = sk.randomClearTable(tf.randomArr(), random.randint(25, 25))
                     log = ''
 
                 if resetButton.collidepoint(pos) and allowClick:
