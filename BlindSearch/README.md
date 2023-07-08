@@ -1,1 +1,1 @@
-![alt text]([https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true](https://github.com/Mikky-sout/OnlyAI/blob/main/BlindSearch/Capture.PNG)https://github.com/Mikky-sout/OnlyAI/blob/main/BlindSearch/Capture.PNG)
+![alt text](https://github.com/Mikky-sout/OnlyAI/blob/main/BlindSearch/Capture.PNG)
